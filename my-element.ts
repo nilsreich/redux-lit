@@ -5,8 +5,8 @@ import { store } from './store.js';
 
 
 //Redux Action
-const INCREMENT1 = 'INCREMENT1';
-const increment1 = () => {
+interface CounterActionIncrement extends Action<'INCREMENT1'> {};
+export const increment1: ActionCreator<CounterActionIncrement> = () => {
   return {
     type: INCREMENT1
   };
@@ -15,10 +15,13 @@ const increment1 = () => {
 
 
 //Redux Reducer
-const INITIAL_STATE = {
-  clicks_btn1: 0,
+export interface CounterState {
+  clicks_btn1: number
 };
-const clicks = (state = INITIAL_STATE, action) => {
+const INITIAL_STATE: CounterState = {
+  clicks_btn1: 0
+};
+const Clicks: Reducer<CounterState, RootAction> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case INCREMENT1:
       return {
@@ -28,9 +31,9 @@ const clicks = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-export default clicks;
+export default Clicks;
 store.addReducers({
-  clicks
+  Clicks
 });
 
 
