@@ -8,17 +8,18 @@ import { LitElement, html, property } from '@polymer/lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from './store.js';
 //Redux Action
-const INCREMENT1 = 'INCREMENT1';
-const increment1 = () => {
+export const INCREMENT1 = 'INCREMENT1';
+;
+export const increment1 = () => {
     return {
         type: INCREMENT1
     };
 };
-//Redux Reducer
+;
 const INITIAL_STATE = {
-    clicks_btn1: 0,
+    clicks_btn1: 0
 };
-const clicks = (state = INITIAL_STATE, action) => {
+const Clicks = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case INCREMENT1:
             return {
@@ -28,9 +29,9 @@ const clicks = (state = INITIAL_STATE, action) => {
             return state;
     }
 };
-export default clicks;
+export default Clicks;
 store.addReducers({
-    clicks
+    Clicks
 });
 //Lit-Element
 class MyElement extends connect(store)(LitElement) {
@@ -39,11 +40,6 @@ class MyElement extends connect(store)(LitElement) {
         // Public property API that triggers re-render (synced with attributes)
         this.foo = 'foo';
         this.whales = 5;
-        this.addEventListener('click', async (e) => {
-            this.whales++;
-            await this.updateComplete;
-            this.dispatchEvent(new CustomEvent('whales', { detail: { whales: this.whales } }));
-        });
     }
     // Render method should return a `TemplateResult` using the provided lit-html `html` tag function
     render() {
@@ -58,18 +54,17 @@ class MyElement extends connect(store)(LitElement) {
       </style>
       <h4>Foo: ${this.foo}</h4>
       <div>whales: ${'🐳'.repeat(this.whales)}</div>
-      <button @click="${(event) => this.clickHandler2(event)}">Vlick</button>
+      <button @click="${() => this.clickHandler2()}">Vlick</button>
 
       <slot></slot>
     `;
     }
-    clickHandler2(event) {
+    clickHandler2() {
         store.dispatch(increment1());
-        console.log(state);
     }
     // This is called every time something is updated in the store.
     stateChanged(state) {
-        this.whales = state.clicks.clicks_btn1;
+        this.whales = state.Clicks.clicks_btn1;
     }
 }
 __decorate([

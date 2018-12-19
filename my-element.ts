@@ -1,10 +1,13 @@
 import {LitElement, html, property} from '@polymer/lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
-import { store } from './store.js';
+import { store, RootState, RootAction } from './store.js';
 
 
 
 //Redux Action
+export const INCREMENT1 = 'INCREMENT1';
+import { Action, ActionCreator } from 'redux';
+export type CounterAction = CounterActionIncrement;
 interface CounterActionIncrement extends Action<'INCREMENT1'> {};
 export const increment1: ActionCreator<CounterActionIncrement> = () => {
   return {
@@ -15,6 +18,7 @@ export const increment1: ActionCreator<CounterActionIncrement> = () => {
 
 
 //Redux Reducer
+import { Reducer } from 'redux';
 export interface CounterState {
   clicks_btn1: number
 };
@@ -50,11 +54,6 @@ class MyElement extends connect(store)(LitElement) {
 
   constructor() {
     super();
-    this.addEventListener('click', async (e) => {
-      this.whales++;
-      await this.updateComplete;
-      this.dispatchEvent(new CustomEvent('whales', {detail: {whales: this.whales}}))
-    });
   }
 
   // Render method should return a `TemplateResult` using the provided lit-html `html` tag function
@@ -70,21 +69,20 @@ class MyElement extends connect(store)(LitElement) {
       </style>
       <h4>Foo: ${this.foo}</h4>
       <div>whales: ${'🐳'.repeat(this.whales)}</div>
-      <button @click="${(event: any) => this.clickHandler2(event)}">Vlick</button>
+      <button @click="${() => this.clickHandler2()}">Vlick</button>
 
       <slot></slot>
     `;
   }
 
 
-  clickHandler2(event: any) {
+  clickHandler2() {
     store.dispatch(increment1());
-    console.log(state)
   }
 
   // This is called every time something is updated in the store.
-  stateChanged(state) {
-    this.whales = state.clicks.clicks_btn1;
+  stateChanged(state: RootState) {
+    this.whales = state.Clicks!.clicks_btn1;
   }
 
 }

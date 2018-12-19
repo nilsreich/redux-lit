@@ -16,7 +16,7 @@ import {
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { lazyReducerEnhancer } from 'pwa-helpers/lazy-reducer-enhancer.js';
 
-import { Clicks } from './my-element';
+import { CounterState, CounterAction} from './my-element';
 
 // Overall state extends static states and partials lazy states.
 export interface RootState {
@@ -39,8 +39,3 @@ export const store = createStore(
     lazyReducerEnhancer(combineReducers),
     applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>))
 );
-
-// Initially loaded reducers.
-store.addReducers({
-  Clicks
-});
