@@ -1,5 +1,4 @@
 const path = require('path');
-var Visualizer = require('webpack-visualizer-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
@@ -49,7 +48,5 @@ module.exports = {
         }
       })]
   },
-  plugins: [new Visualizer({
-    filename: './statistics.html'
-  })]
+  plugins: []
 };
