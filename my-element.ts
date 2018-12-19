@@ -69,7 +69,7 @@ class MyElement extends connect(store)(LitElement) {
       </style>
       <h4>Foo: ${this.foo}</h4>
       <div>whales: ${'🐳'.repeat(this.whales)}</div>
-      <button @click="${() => this.clickHandler2()}">Vlick</button>
+      <button @click="${() => this.clickHandler2()}">Click</button>
 
       <slot></slot>
     `;
